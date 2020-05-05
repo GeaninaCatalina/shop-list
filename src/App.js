@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import { withNamespaces } from 'react-i18next';
 import i18n from './i18n';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import Login from './components/Login';
 import { ButtonGroup, Button } from '@material-ui/core';
 
@@ -27,7 +27,8 @@ class App extends Component {
         <div>
           <Router>
             <Switch>
-              <Route exact path="/login" component={Login}></Route>
+              <Route exact path="/login" component={Login}/>
+              <Redirect from='/' to='/login'/>
             </Switch>
           </Router>
         </div>
