@@ -1,26 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
+import { withNamespaces } from 'react-i18next';
+import i18n from './i18n';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+
+  changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+  }
+
+  render(){
+    const {t} = this.props;
+    return(
+      <div>
+      <button onClick={() => this.changeLanguage('fr')}>fr</button>
+      <button onClick={() => this.changeLanguage('en')}>en</button>
+        {t('title')} 
+      </div>
+    )
+  }
 }
 
-export default App;
+export default withNamespaces()(App);
