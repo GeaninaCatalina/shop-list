@@ -4,6 +4,7 @@ import { withNamespaces } from 'react-i18next';
 import i18n from './i18n';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Login from './components/Login';
+import { ButtonGroup, Button } from '@material-ui/core';
 
 class App extends Component {
 
@@ -15,14 +16,21 @@ class App extends Component {
     const { t } = this.props;
     return (
       <div>
-        <button onClick={() => this.changeLanguage('fr')}>fr</button>
-        <button onClick={() => this.changeLanguage('en')}>en</button>
-        {t('title')}
-        <Router>
-          <Switch>
-            <Route exact path="/login" component={Login}></Route>
-          </Switch>
-        </Router>
+        
+        <ButtonGroup disableElevation variant="contained" color="primary">
+          <Button onClick={() => this.changeLanguage('fr')}>Fr</Button>
+          <Button onClick={() => this.changeLanguage('en')}>En</Button>
+        </ButtonGroup>
+        <div className='AppHeader'>
+          {t('title')}
+        </div>
+        <div>
+          <Router>
+            <Switch>
+              <Route exact path="/login" component={Login}></Route>
+            </Switch>
+          </Router>
+        </div>
       </div>
     )
   }
