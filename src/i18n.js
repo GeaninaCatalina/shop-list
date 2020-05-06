@@ -5,13 +5,19 @@ import { reactI18nextModule } from "react-i18next";
 const resources = {
     en: {
       translation: {
-        "title": "Shoping List"
+        "title": "Shopping List",
+        "login_name":"Name",
+        "login_password":"Password",
+        "submit":"Submit"
       }
     }, 
 
   fr: {
     translation: {
-      "title": "Liste de courses"
+      "title": "Liste de courses",
+      "login_name":"Nom",
+      "login_password":"Mot de passe",
+      "submit": "Soumettre"
     }
   }
 }; 

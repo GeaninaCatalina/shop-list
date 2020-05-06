@@ -1,7 +1,14 @@
 .AppHeader {
   align-items: center;
-  min-height: 100vh;
+  min-height: 10vh;
   padding: 60px;
   text-align: center;
   font-size: 30px;
 }
+
+h1 {
+	font-family: 'Dancing Script', cursive;
+	font-size: 80px;
+  margin-bottom: 30px;
+}
+
