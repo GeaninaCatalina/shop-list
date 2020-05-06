@@ -27,7 +27,7 @@ class App extends Component {
         <div>
           <Router>
             <Switch>
-              <Route exact path="/login" component={(props) => <Login {...props} />} />
+              <Route exact path="/login" component={Login} />
               <Route exact path="/lists" component={Lists} />
               <Redirect from='/' to='/login' />
             </Switch>
