@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { Button, Grid, Form, Label, Input } from 'semantic-ui-react';
 import { withNamespaces } from 'react-i18next';
-import i18n from '../i18n';
+import i18n from '../../i18n';
+import { Link } from 'react-router-dom'; 
 
 
-class Login extends Component {
+class Signin extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -26,7 +27,7 @@ class Login extends Component {
   }
 
   onSubmit = () => {
-    this.props.history.push('/lists');
+    this.props.history.push('/login');
   }
 
   render() {
@@ -39,15 +40,17 @@ class Login extends Component {
             <Grid.Column width={6} verticalAlign='middle'>
               <Form>
                 <Form.Field>
-                  <Label align='left'>{t('login_name')}</Label>
-                  <Input align='left' placeholder={t('login_name')} onChange={this.onSubmitUser} />
+                  <Input align='left' placeholder={t('signin_name')} onChange={this.onSubmitUser} />
                 </Form.Field>
                 <Form.Field>
-                  <Label align='left' >{t('login_password')}</Label>
-                  <Input align='left' type='password' placeholder={t('login_password')} onChange={this.onSubmitPassword} />
+                  <Input align='left' type='password' placeholder={t('signin_password')} onChange={this.onSubmitPassword} />
+                </Form.Field>
+                <Form.Field>
+                  <Input align='left' type='password' placeholder={t('signin_confirm')} onChange={this.onSubmitPassword} />
                 </Form.Field>
                 <Button color='green' type='submit' onClick={this.onSubmit}>{t('submit')}</Button>
               </Form>
+              <h2>{t('signin_message')} <Link to='/login'>{t('log_in')}</Link></h2>
             </Grid.Column>
             <Grid.Column width={3} ></Grid.Column>
           </Grid.Row>
@@ -56,4 +59,4 @@ class Login extends Component {
     )
   }
 }
-export default withNamespaces()(Login); 
+export default withNamespaces()(Signin); 

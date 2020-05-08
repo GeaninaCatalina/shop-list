@@ -6,18 +6,40 @@ const resources = {
     en: {
       translation: {
         "title": "Shopping List",
-        "login_name":"Name",
-        "login_password":"Password",
-        "submit":"Submit"
+        "login_name" : "Name",
+        "login_password" : "Password",
+        "login_message" : "You don't have an account?", 
+        "sign_in": "Signin here!",
+
+        "signin_name" : "Name",
+        "signin_password": "Password",
+        "signin_confirm" : "Confirm password",
+        "signin_message": "You have an account?",
+        "log_in": "Login here!",
+      
+
+
+        "submit": "Submit"
       }
     }, 
 
   fr: {
     translation: {
-      "title": "Liste de courses",
-      "login_name":"Nom",
-      "login_password":"Mot de passe",
-      "submit": "Soumettre"
+      "title" : "Liste de courses",
+      "login_name" : "Nom",
+      "login_password" : "Mot de passe",
+      "login_message" : "Vous n'avez pas de compte?", 
+      "sign_in" : "Connectez-vous ici!",
+
+      "signin_name" : "Nom",
+      "signin_password" : "Mot de passe",
+      "signin_confirm" : "Confirmez le mot de passe",
+      "signin_message": "Vous avez un compte?",
+      "log_in": "Connectez-vous ici!",
+
+
+      "submit" : "Soumettre"
+
     }
   }
 }; 

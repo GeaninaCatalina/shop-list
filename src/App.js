@@ -4,8 +4,9 @@ import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-d
 import { Button } from 'semantic-ui-react';
 import { withNamespaces } from 'react-i18next';
 import i18n from './i18n';
-import Login from './components/Login';
-import Lists from './components/Lists';
+import Login from './components/login/Login';
+import Lists from './components/list/Lists';
+import Signin from './components/signin/Signin';
 
 class App extends Component {
 
@@ -29,6 +30,7 @@ class App extends Component {
             <Switch>
               <Route exact path="/login" component={Login} />
               <Route exact path="/lists" component={Lists} />
+              <Route exact path="/signin" component={Signin} />
               <Redirect from='/' to='/login' />
             </Switch>
           </Router>
