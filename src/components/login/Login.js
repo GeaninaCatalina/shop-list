@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Grid, Form, Label, Input } from 'semantic-ui-react';
+import { Button, Grid, Form, Input } from 'semantic-ui-react';
 import { withNamespaces } from 'react-i18next';
 import i18n from '../../i18n';
 import { Link } from 'react-router-dom';
