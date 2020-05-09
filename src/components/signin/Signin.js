@@ -3,6 +3,7 @@ import { Button, Grid, Form, Input } from 'semantic-ui-react';
 import { withNamespaces } from 'react-i18next';
 import i18n from '../../i18n';
 import { Link } from 'react-router-dom'; 
+import axios from 'axios';
 
 
 class Signin extends Component {
@@ -10,9 +11,11 @@ class Signin extends Component {
     super(props);
     this.state = {
       userName: '',
-      password: ''
+      password: '',
+      confirmed: ''
     };
   }
+
 
   onSubmitUser = (e) => {
     this.setState({ userName: e.target.value });
@@ -22,12 +25,31 @@ class Signin extends Component {
     this.setState({ password: e.target.value });
   }
 
+  onSubmitConfirm = (e) => {
+    this.setState({ confirmed: e.target.value });
+  }
+
   changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
   }
 
-  onSubmit = () => {
-    this.props.history.push('/login');
+   async onSubmitCredentials(){
+      const res = await axios.post('http://localhost:4100/signin', 
+      {
+        userName: this.state.userName,
+        password: this.state.password
+      });
+      if (res.data === true) {
+        this.props.history.push('/login');
+      } else {
+        alert ('User name already exits!')
+      }
+  }
+
+  isPasswordIsValid= () => {
+    return this.state.password !== '' && 
+    this.state.password === this.state.confirmed && 
+    this.state.userName !== '';
   }
 
   render() {
@@ -46,9 +68,9 @@ class Signin extends Component {
                   <Input align='left' type='password' placeholder={t('signin_password')} onChange={this.onSubmitPassword} />
                 </Form.Field>
                 <Form.Field>
-                  <Input align='left' type='password' placeholder={t('signin_confirm')} onChange={this.onSubmitPassword} />
+                  <Input align='left' type='password' placeholder={t('signin_confirm')} onChange={this.onSubmitConfirm} />
                 </Form.Field>
-                <Button color='green' type='submit' onClick={this.onSubmit}>{t('submit')}</Button>
+                <Button color='green' type='submit' disabled={!this.isPasswordIsValid()} onClick={() => this.onSubmitCredentials()}>{t('submit')}</Button>
               </Form>
               <h2>{t('signin_message')} <Link to='/login'>{t('log_in')}</Link></h2>
             </Grid.Column>

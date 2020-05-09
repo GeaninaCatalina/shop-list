@@ -3,6 +3,7 @@ import { Button, Grid, Form, Input } from 'semantic-ui-react';
 import { withNamespaces } from 'react-i18next';
 import i18n from '../../i18n';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 
 class Login extends Component {
@@ -12,6 +13,20 @@ class Login extends Component {
       userName: '',
       password: ''
     };
+  }
+
+  async onSubmitCredentials(){
+    const res = await axios.post('http://localhost:4100/login', 
+      {
+        userName: this.state.userName,
+        password: this.state.password
+      }) 
+    console.log(res.data);
+    if (res.data === true) {
+      this.props.history.push('/lists');
+    } else {
+      alert ('Wrong User name or password!')
+    }
   }
 
   onSubmitUser = (e) => {
@@ -26,9 +41,6 @@ class Login extends Component {
     i18n.changeLanguage(lng);
   }
 
-  onSubmit = () => {
-    this.props.history.push('/lists');
-  }
 
   render() {
     const { t } = this.props;
@@ -45,7 +57,7 @@ class Login extends Component {
                 <Form.Field>
                   <Input align='left' type='password' placeholder={t('login_password')} onChange={this.onSubmitPassword} />
                 </Form.Field>
-                <Button color='green' type='submit' onClick={this.onSubmit}>{t('submit')}</Button>
+                <Button color='green' type='submit' onClick={() => this.onSubmitCredentials()}>{t('submit')}</Button>
               </Form>
               <h2>{t('login_message')} <Link to='/signin'>{t('sign_in')}</Link></h2>
             </Grid.Column>
