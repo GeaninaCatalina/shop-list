@@ -10,9 +10,12 @@ class Lists extends Component {
   render() {
     const { t } = this.props;
     return (
-      <div>
-          {t('login_name')}
-      </div>
+      <Grid centered columns={2}>
+      <Grid.Row>
+        <Grid.Column width={7}></Grid.Column>
+        <Grid.Column width={2} verticalAlign='middle'>Placeholder</Grid.Column>
+      </Grid.Row>
+    </Grid>
     )
   }
 }
