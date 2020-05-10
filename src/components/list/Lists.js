@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withNamespaces } from 'react-i18next';
 import i18n from '../../i18n';
+import { Grid } from 'semantic-ui-react';
 
 class Lists extends Component {
   changeLanguage = (lng) => {
@@ -10,7 +11,7 @@ class Lists extends Component {
   render() {
     const { t } = this.props;
     return (
-      <Grid centered columns={2}>
+      <Grid centered columns={2} divided='true'>
       <Grid.Row>
         <Grid.Column width={7}></Grid.Column>
         <Grid.Column width={2} verticalAlign='middle'>Placeholder</Grid.Column>
