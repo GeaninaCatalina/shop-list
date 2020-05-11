@@ -5,8 +5,9 @@ import { Button } from 'semantic-ui-react';
 import { withNamespaces } from 'react-i18next';
 import i18n from './i18n';
 import Login from './components/login/Login';
-import Lists from './components/list/Lists';
+//import Lists from './components/list/Lists';
 import Signin from './components/signin/Signin';
+import NestedList from './NestedList';
 
 class App extends Component {
 
@@ -29,9 +30,8 @@ class App extends Component {
           <Router>
             <Switch>
               <Route exact path="/login" component={Login} />
-              <Route exact path="/lists" component={Lists} />
+              <Route exact path="/list-of-lists/lists" component={NestedList} />
               <Route exact path="/signin" component={Signin} />
-              <Redirect from='/' to='/login' />
             </Switch>
           </Router>
         </div>
