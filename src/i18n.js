@@ -16,10 +16,11 @@ const resources = {
         "signin_confirm" : "Confirm password",
         "signin_message": "You have an account?",
         "log_in": "Login here!",
-      
+    
+        "submit": "Submit",
+        
+        "lists_addButton":"Add new list" 
 
-
-        "submit": "Submit"
       }
     }, 
 
@@ -37,8 +38,9 @@ const resources = {
       "signin_message": "Vous avez un compte?",
       "log_in": "Connectez-vous ici!",
 
+      "submit" : "Soumettre",
 
-      "submit" : "Soumettre"
+      "lists_addButton":"Ajouter une nouvelle liste"
 
     }
   }
