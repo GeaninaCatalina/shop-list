@@ -1,26 +1,41 @@
 import React, { Component } from 'react';
 import { withNamespaces } from 'react-i18next';
 import i18n from '../../i18n';
-import { Tab } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
-
+import { Tab, Button, Input } from 'semantic-ui-react';
 
 class Lists extends Component {
+  constructor(){
+    super(); 
+    this.state = {
+      lists: [{listName: 'geanina'}]
+    }
+  }
+
   changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
   }
 
+  onAddNewList = (listName) => {
+    const { lists } = this.state;
+    lists.push({
+      listName
+    });
+
+    this.setState({lists});
+  }
+
+  
   render() {
     const { t } = this.props;
-    const panes = [
-      { menuItem: '1st list created', render: () => <Tab.Pane>Drop Content 1 </Tab.Pane> },
-      { menuItem: '2nd list', render: () => <Tab.Pane>Drop Content 2</Tab.Pane> },
-      { menuItem: '3th list', render: () => <Tab.Pane>Drop Content 3</Tab.Pane> },
-    ]
+    const panes = [];
+    this.state.lists.forEach(element => panes.push({ menuItem: element.listName, render: () => <Tab.Pane>Salut {element.listName} </Tab.Pane> }));
+
     return (
       <div>
-        {/* <Link>+ {t('lists_addButton')}</Link> */}
-        <Tab menu={{ fluid: true, vertical: true, tabular: 'right' }} panes={panes} />
+        <Input action={{ icon: 'add' }} placeholder='Add list'/>
+        {/* <Button circular icon='add' attached='right' content={t('lists_addButton')}/> */}
+        <Tab menu={{ fluid: true, vertical: true, tabular: 'right' }} panes={panes}></Tab> 
+        
       </div>
     )
   }

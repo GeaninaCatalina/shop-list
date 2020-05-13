@@ -15,6 +15,12 @@ class App extends Component {
     i18n.changeLanguage(lng);
   }
 
+  noMatchPage = () => {
+    return(
+      <h3>404 - Not found</h3>
+    )
+  }
+
   render() {
     const { t } = this.props;
     return (
@@ -32,6 +38,7 @@ class App extends Component {
               <Route exact path="/login" component={Login} />
               <Route exact path="/list-of-lists/lists" component={NestedList} />
               <Route exact path="/signin" component={Signin} />
+              <Route component={this.noMatchPage} />
             </Switch>
           </Router>
         </div>
