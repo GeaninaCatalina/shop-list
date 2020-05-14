@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { withNamespaces } from 'react-i18next';
 import i18n from '../../i18n';
-import { Tab, Button, Input } from 'semantic-ui-react';
+import { Tab, Button, Input, Form } from 'semantic-ui-react';
 
 class Lists extends Component {
-  constructor(){
-    super(); 
+  constructor() {
+    super();
     this.state = {
-      lists: [{listName: 'geanina'}]
+      lists: [{ listName: 'geanina' }]
     }
   }
 
@@ -21,10 +21,10 @@ class Lists extends Component {
       listName
     });
 
-    this.setState({lists});
+    this.setState({ lists });
   }
 
-  
+
   render() {
     const { t } = this.props;
     const panes = [];
@@ -32,10 +32,17 @@ class Lists extends Component {
 
     return (
       <div>
-        <Input action={{ icon: 'add' }} placeholder='Add list'/>
-        {/* <Button circular icon='add' attached='right' content={t('lists_addButton')}/> */}
-        <Tab menu={{ fluid: true, vertical: true, tabular: 'right' }} panes={panes}></Tab> 
-        
+        <Form >
+          <Form.Group widths='12' >
+            <Form.Field
+              control='input'
+              placeholder={t('lists_addButton')}
+            />
+            <Button type='submit' icon='add' ></Button>
+          </Form.Group>
+          </Form>
+          {/* <Button circular icon='add' attached='right' content={t('lists_addButton')}/> */}
+          <Tab menu={{ fluid: true, vertical: true, tabular: 'right' }} panes={panes}></Tab> 
       </div>
     )
   }
