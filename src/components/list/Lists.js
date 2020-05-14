@@ -33,7 +33,7 @@ class Lists extends Component {
     return (
       <div>
         <Form >
-          <Form.Group widths='12' >
+          <Form.Group widths='12' align>
             <Form.Field
               control='input'
               placeholder={t('lists_addButton')}
