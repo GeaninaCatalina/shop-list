@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './NestedList.css';
 import { Switch, Route } from 'react-router-dom';
-import { Grid, GridRow } from 'semantic-ui-react';
+import { Grid } from 'semantic-ui-react';
 import { withNamespaces } from 'react-i18next';
 import i18n from '../../i18n';
 import Lists from './../list/Lists';
@@ -13,7 +13,7 @@ class NestedList extends Component {
   }
 
   render() {
-    const { t } = this.props;
+    // const { t } = this.props;
     return (
       <div>
         <div>

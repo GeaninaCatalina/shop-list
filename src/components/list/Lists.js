@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { withNamespaces } from 'react-i18next';
 import i18n from '../../i18n';
-import { Tab, Button, Input, Form } from 'semantic-ui-react';
+import { Button, Input, Form, Menu } from 'semantic-ui-react';
 
 class Lists extends Component {
   constructor() {
     super();
     this.state = {
-      lists: [{ listName: 'geanina' }]
+      lists: [],
+      userInput: ''
     }
   }
 
@@ -15,34 +16,53 @@ class Lists extends Component {
     i18n.changeLanguage(lng);
   }
 
-  onAddNewList = (listName) => {
-    const { lists } = this.state;
-    lists.push({
-      listName
-    });
 
-    this.setState({ lists });
+  onClickAdd = () => {
+    this.setState({ userInput: '' })
   }
 
+  onAddNewList = (listName) => {
+    const { lists } = this.state;
+    if (this.state.userInput !== '') {
+      lists.push({ listName: this.state.userInput });
+      this.setState({ lists });
+      this.onClickAdd();
+    }
+  }
+
+  onInputChange = (event) => {
+    this.setState({
+      userInput: event.target.value
+    });
+
+    console.log(this.state);
+  }
 
   render() {
     const { t } = this.props;
-    const panes = [];
-    this.state.lists.forEach(element => panes.push({ menuItem: element.listName, render: () => <Tab.Pane>Salut {element.listName} </Tab.Pane> }));
-
     return (
       <div>
-        <Form >
-          <Form.Group widths='12'   alignments='right'>
-            <Form.Field
-              control='input'
-              placeholder={t('lists_addButton')}
-            />
-            <Button type='submit' icon='add' ></Button>
-          </Form.Group>
+        <div>
+          <Form >
+            <Form.Group widths='12' alignments='right'>
+              <Input placeholder={t('lists_addButton')}
+                onChange={this.onInputChange}
+                value={this.state.userInput}
+              />
+              <Button type='submit' icon='add' onClick={this.onAddNewList}></Button>
+            </Form.Group>
           </Form>
-          {/* <Button circular icon='add' attached='right' content={t('lists_addButton')}/> */}
-          <Tab menu={{ fluid: true, vertical: true, tabular: 'right' }} panes={panes}></Tab> 
+          <Menu>
+            {this.state.lists.map((list) => {
+              return (
+                <Menu.Item
+                  name={list.listName}
+                  onClick={this.handleItemClick}
+                />
+            )
+            })}
+          </Menu>
+        </div>
       </div>
     )
   }
