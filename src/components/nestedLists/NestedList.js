@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import './App.css';
+import './NestedList.css';
 import { Switch, Route } from 'react-router-dom';
-import { Grid } from 'semantic-ui-react';
+import { Grid, GridRow } from 'semantic-ui-react';
 import { withNamespaces } from 'react-i18next';
-import i18n from './i18n';
-import Lists from './components/list/Lists';
+import i18n from '../../i18n';
+import Lists from './../list/Lists';
 
 class NestedList extends Component {
 
@@ -13,14 +13,14 @@ class NestedList extends Component {
   }
 
   render() {
-    //const { t } = this.props;
+    const { t } = this.props;
     return (
       <div>
         <div>
           <Grid centered columns={2} >
-            <Grid.Row>
+            <Grid.Row stretched>
               <Grid.Column width={1}></Grid.Column>
-              <Grid.Column width={9} verticalAlign='middle'>
+              <Grid.Column width={9} verticalAlign='middle' >
                 <Switch>
                   <Route exact path="/list-of-lists/lists" component={Lists} />
                 </Switch>

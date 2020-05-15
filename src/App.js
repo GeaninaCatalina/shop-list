@@ -7,7 +7,7 @@ import i18n from './i18n';
 import Login from './components/login/Login';
 //import Lists from './components/list/Lists';
 import Signin from './components/signin/Signin';
-import NestedList from './NestedList';
+import NestedList from './components/nestedLists/NestedList';
 
 class App extends Component {
 
