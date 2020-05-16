@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { withNamespaces } from 'react-i18next';
 import i18n from '../../i18n';
 import { Button, Input, Form, List } from 'semantic-ui-react';
+import axios from 'axios';
 
 class Lists extends Component {
   constructor() {
@@ -16,18 +17,13 @@ class Lists extends Component {
     i18n.changeLanguage(lng);
   }
 
-
-  onClickAdd = () => {
-    this.setState({ userInput: '' })
-  }
-
-  onAddNewList = (listName) => {
+  onAddNewList = () => {
     const { lists } = this.state;
     if (this.state.userInput !== '') {
       lists.push({ listName: this.state.userInput });
-      this.setState({ lists });
-      this.onClickAdd();
-    }
+      this.onSubmitNewList();
+      this.setState({ lists, userInput: '' });
+    };
   }
 
   onInputChange = (event) => {
@@ -37,6 +33,14 @@ class Lists extends Component {
 
     console.log(this.state);
   }
+
+  async onSubmitNewList(){
+    const res = await axios.post('http://localhost:4100/savelist', 
+    {
+      listName: this.state.userInput
+    });
+    console.log(res.data); 
+}
 
   render() {
     const { t } = this.props;
@@ -53,9 +57,9 @@ class Lists extends Component {
             </Form.Group>
           </Form>
           <List divided relaxed>
-            {this.state.lists.map((list) => {
+            {this.state.lists.map((list, index) => {
               return (
-                <List.Item>
+                <List.Item key={index}>
                   <List.Content>
                     <List.Header as='a'>{list.listName}</List.Header>
                   </List.Content>

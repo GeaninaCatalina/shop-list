@@ -12,6 +12,7 @@ class NestedList extends Component {
     i18n.changeLanguage(lng);
   }
 
+
   render() {
     // const { t } = this.props;
     return (
@@ -20,7 +21,7 @@ class NestedList extends Component {
           <Grid centered columns={3} >
             <Grid.Row>
               <Grid.Column width={3}></Grid.Column>
-              <Grid.Column width={5} verticalAlign='middle' centered>
+              <Grid.Column width={5} verticalAlign='middle'>
                 <Switch>
                   <Route exact path="/list-of-lists/lists" component={Lists} />
                 </Switch>
