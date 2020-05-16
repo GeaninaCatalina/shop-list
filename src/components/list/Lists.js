@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withNamespaces } from 'react-i18next';
 import i18n from '../../i18n';
-import { Button, Input, Form, Menu } from 'semantic-ui-react';
+import { Button, Input, Form, List } from 'semantic-ui-react';
 
 class Lists extends Component {
   constructor() {
@@ -44,7 +44,7 @@ class Lists extends Component {
       <div>
         <div>
           <Form >
-            <Form.Group widths='12' alignments='right'>
+          <Form.Group widths='equal'>
               <Input placeholder={t('lists_addButton')}
                 onChange={this.onInputChange}
                 value={this.state.userInput}
@@ -52,16 +52,17 @@ class Lists extends Component {
               <Button type='submit' icon='add' onClick={this.onAddNewList}></Button>
             </Form.Group>
           </Form>
-          <Menu>
+          <List divided relaxed>
             {this.state.lists.map((list) => {
               return (
-                <Menu.Item
-                  name={list.listName}
-                  onClick={this.handleItemClick}
-                />
-            )
+                <List.Item>
+                  <List.Content>
+                    <List.Header as='a'>{list.listName}</List.Header>
+                  </List.Content>
+                </List.Item>
+              )
             })}
-          </Menu>
+          </List>
         </div>
       </div>
     )
