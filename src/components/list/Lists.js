@@ -34,21 +34,29 @@ class Lists extends Component {
     console.log(this.state);
   }
 
-  async onSubmitNewList(){
-    const res = await axios.post('http://localhost:4100/savelist', 
-    {
-      listName: this.state.userInput
-    });
-    console.log(res.data); 
-}
+  async onSubmitNewList() {
+    const res = await axios.post('http://localhost:4100/savelist',
+      {
+        listName: this.state.userInput
+      });
+    console.log(res.data);
+  }
 
+
+  async getLists() {
+    const response = await axios.post("http://localhost:4100/lists", {
+    lists: 'all lists'
+    });
+    
+    this.setState({ list {}: response.data });
+  }
   render() {
     const { t } = this.props;
     return (
       <div>
         <div>
           <Form >
-          <Form.Group widths='equal'>
+            <Form.Group widths='equal'>
               <Input placeholder={t('lists_addButton')}
                 onChange={this.onInputChange}
                 value={this.state.userInput}
