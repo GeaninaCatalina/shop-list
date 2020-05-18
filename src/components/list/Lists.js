@@ -44,12 +44,13 @@ class Lists extends Component {
 
 
   async getLists() {
-    const response = await axios.post("http://localhost:4100/lists", {
+    const response = await axios.post("http://localhost:4100/getlists", {
     lists: 'all lists'
     });
     
-    this.setState({ list {}: response.data });
+    this.setState({ list:[response.data] });
   }
+
   render() {
     const { t } = this.props;
     return (
@@ -64,7 +65,7 @@ class Lists extends Component {
               <Button type='submit' icon='add' onClick={this.onAddNewList}></Button>
             </Form.Group>
           </Form>
-          <List divided relaxed>
+          <List divided relaxed floated='left'>
             {this.state.lists.map((list, index) => {
               return (
                 <List.Item key={index}>
