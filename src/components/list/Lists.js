@@ -8,8 +8,9 @@ class Lists extends Component {
   constructor() {
     super();
     this.state = {
-      listName: [],
-      userInput: ''
+      lists: [],
+      userInput: '',
+      selectedItem: {name: '', content: 'Hahaha'}
     }
   }
 
@@ -17,16 +18,22 @@ class Lists extends Component {
     this.getLists();
   }
 
+  onChangeSelectedItem = (newSelectedItem) => {
+    const selectedItem = this.state.lists.filter(item => item.name === newSelectedItem)[0];
+    
+    this.setState({selectedItem});
+  }
+
   changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
   }
 
   onAddNewList = () => {
-    const { listName } = this.state;
+    const { lists } = this.state;
     if (this.state.userInput !== '') {
-      listName.push(this.state.userInput );
+      lists.push({listName: this.state.userInput} );
       this.onSubmitNewList();
-      this.setState({ listName, userInput: '' });
+      this.setState({ lists, userInput: '' });
     };
   }
 
@@ -51,7 +58,7 @@ class Lists extends Component {
     const response = await axios.get('http://localhost:4100/getlists', {
     });
     
-    this.setState({ listName: response.data });
+    this.setState({ lists: response.data });
   }
 
   render() {
@@ -69,11 +76,11 @@ class Lists extends Component {
             </Form.Group>
           </Form>
           <List divided relaxed floated='left'>
-            {this.state.listName.map((list, index) => {
+            {this.state.lists.map((list, index) => {
               return (
                 <List.Item key={index}>
                   <List.Content>
-                    <List.Header as='a'>{list}</List.Header>
+                    <List.Header as='a'>{list.listName}</List.Header>
                   </List.Content>
                 </List.Item>
               )
