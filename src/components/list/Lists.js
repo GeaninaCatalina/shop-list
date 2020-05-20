@@ -8,9 +8,13 @@ class Lists extends Component {
   constructor() {
     super();
     this.state = {
-      lists: [],
+      listName: [],
       userInput: ''
     }
+  }
+
+  componentWillMount() {
+    this.getLists();
   }
 
   changeLanguage = (lng) => {
@@ -18,11 +22,11 @@ class Lists extends Component {
   }
 
   onAddNewList = () => {
-    const { lists } = this.state;
+    const { listName } = this.state;
     if (this.state.userInput !== '') {
-      lists.push({ listName: this.state.userInput });
+      listName.push(this.state.userInput );
       this.onSubmitNewList();
-      this.setState({ lists, userInput: '' });
+      this.setState({ listName, userInput: '' });
     };
   }
 
@@ -44,11 +48,10 @@ class Lists extends Component {
 
 
   async getLists() {
-    const response = await axios.post("http://localhost:4100/getlists", {
-    lists: 'all lists'
+    const response = await axios.get('http://localhost:4100/getlists', {
     });
     
-    this.setState({ list:[response.data] });
+    this.setState({ listName: response.data });
   }
 
   render() {
@@ -66,11 +69,11 @@ class Lists extends Component {
             </Form.Group>
           </Form>
           <List divided relaxed floated='left'>
-            {this.state.lists.map((list, index) => {
+            {this.state.listName.map((list, index) => {
               return (
                 <List.Item key={index}>
                   <List.Content>
-                    <List.Header as='a'>{list.listName}</List.Header>
+                    <List.Header as='a'>{list}</List.Header>
                   </List.Content>
                 </List.Item>
               )
