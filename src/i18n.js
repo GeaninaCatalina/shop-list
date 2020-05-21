@@ -19,7 +19,8 @@ const resources = {
     
         "submit": "Submit",
         
-        "lists_addButton":"Add new list" 
+        "lists_addButton":"Add new list" , 
+        "no_lists_message" : " There are no lists. Please add one!"
 
       }
     }, 
@@ -40,7 +41,8 @@ const resources = {
 
       "submit" : "Soumettre",
 
-      "lists_addButton":"Ajouter une nouvelle liste"
+      "lists_addButton":"Ajouter une nouvelle liste",
+      "no_lists_message" : "Il n'y a pas de listes. Veuillez en ajouter un!"
 
     }
   }

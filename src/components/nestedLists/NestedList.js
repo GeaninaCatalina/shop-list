@@ -20,13 +20,13 @@ class NestedList extends Component {
         <div>
           <Grid centered columns={3} >
             <Grid.Row>
-              <Grid.Column width={3}></Grid.Column>
-              <Grid.Column width={5} verticalAlign='middle'>
+              <Grid.Column width={2}></Grid.Column>
+              <Grid.Column width={12} verticalAlign='middle'>
                 <Switch>
                   <Route exact path="/list-of-lists/lists" component={Lists} />
                 </Switch>
               </Grid.Column>
-              <Grid.Column width={3}></Grid.Column>
+              <Grid.Column width={2}></Grid.Column>
             </Grid.Row>
           </Grid>
         </div>
