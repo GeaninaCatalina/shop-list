@@ -40,7 +40,7 @@ class Lists extends Component {
   onAddNewList = () => {
     const { lists } = this.state;
     if (this.state.userInput !== '') {
-      const newList = { listName: this.state.userInput, content: this.state.userInput };
+      const newList = { listName: this.state.userInput, content: '' };
       lists.push(newList);
       this.onSubmitNewList();
       this.setState({ lists, userInput: '', selectedItem: newList });
@@ -59,6 +59,32 @@ class Lists extends Component {
         listName: this.state.userInput,
         content: this.state.userInput
       });
+  }
+
+  onUpdateContent = async () => {
+    const {listName, content} = this.state.selectedItem;
+
+    await axios.put('http://localhost:4100/updatelist',
+    {
+      listName: listName,
+      content: content
+    });
+  }
+
+  onChangeContent = (event) => {
+    const newContent = event.target.value;
+    const {lists, selectedItem} = this.state;
+
+    console.log(event.target.value); 
+
+    selectedItem.content = newContent;
+    lists.map(list => {
+      if(list.nameList === selectedItem.nameList) {
+       list.content = selectedItem.content;
+      }
+      return list;
+    })
+    this.setState({lists, selectedItem});
   }
 
   render() {
@@ -84,7 +110,7 @@ class Lists extends Component {
                     </SideMenu>
                   </Grid.Column>
                   <Grid.Column width={12}>
-                    <Content selectedItem={this.state.selectedItem}></Content>
+                    <Content selectedItem={this.state.selectedItem} onContentChange={this.onChangeContent} onSaveButton={this.onUpdateContent}></Content>
                   </Grid.Column>
                 </Grid.Row> :
                 <Grid.Row columns={1}>

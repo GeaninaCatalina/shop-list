@@ -1,4 +1,5 @@
 import React from "react";
+import { TextArea, Button, Form } from 'semantic-ui-react';
 
 class Content extends React.Component {
 
@@ -6,9 +7,12 @@ class Content extends React.Component {
     const { selectedItem } = this.props;
     return(
       <div>
-        <span>{selectedItem.name}</span>
+        <span>{selectedItem.listname}</span>
         <br></br>
-        <span>{selectedItem.content}</span>
+        <Form> 
+        <TextArea placeholder='Tell us more' value={selectedItem.content} style={{ minHeight: 100, minWidth:200 }} onChange={this.props.onContentChange}/>
+        <Button primary onClick={this.props.onSaveButton}>Save</Button>
+        </Form>
       </div>
     )
   }
