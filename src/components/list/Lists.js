@@ -75,15 +75,13 @@ class Lists extends Component {
     const newContent = event.target.value;
     const {lists, selectedItem} = this.state;
 
-    console.log(event.target.value); 
-
     selectedItem.content = newContent;
-    lists.map(list => {
-      if(list.nameList === selectedItem.nameList) {
+    lists.forEach(list => {
+      if(list.listName === selectedItem.listName) {
        list.content = selectedItem.content;
       }
-      return list;
     })
+    console.log(lists)
     this.setState({lists, selectedItem});
   }
 
@@ -101,7 +99,7 @@ class Lists extends Component {
               <Button type='submit' icon='add' onClick={this.onAddNewList}></Button>
             </Form.Group>
           </Form>
-          <Card fluid='true'>
+          <Card fluid>
             <Grid columns={2} centered padded>
               {this.state.selectedItem !== undefined ?
                 <Grid.Row>

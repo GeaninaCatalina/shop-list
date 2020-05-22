@@ -1,21 +1,30 @@
 import React from "react";
-import { TextArea, Button, Form } from 'semantic-ui-react';
+import { TextArea, Button } from 'semantic-ui-react';
+import './Content.css';
+import { withNamespaces } from 'react-i18next';
+import i18n from '../../i18n';
 
 class Content extends React.Component {
 
+  changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+  }
+
   render() {
+    const { t } = this.props;
     const { selectedItem } = this.props;
-    return(
+    return (
       <div>
-        <span>{selectedItem.listname}</span>
-        <br></br>
-        <Form> 
-        <TextArea placeholder='Tell us more' value={selectedItem.content} style={{ minHeight: 100, minWidth:200 }} onChange={this.props.onContentChange}/>
-        <Button primary onClick={this.props.onSaveButton}>Save</Button>
-        </Form>
+        <div className='listTitle'>
+          <span className='title'>{selectedItem.listName}</span>
+        </div>
+        <div className='textArea-container'>
+          <TextArea className='textArea' placeholder={t('placeholder_text')} value={selectedItem.content} onChange={this.props.onContentChange} />
+          <Button primary color='red' onClick={this.props.onSaveButton}>{t('save')}</Button>
+        </div>
       </div>
     )
   }
 }
 
-export default Content;
+export default withNamespaces()(Content);

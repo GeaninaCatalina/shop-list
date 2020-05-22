@@ -5,7 +5,7 @@ import { reactI18nextModule } from "react-i18next";
 const resources = {
     en: {
       translation: {
-        "title": "Shopping List",
+        "title": "Notes and Lists",
         "login_name" : "Name",
         "login_password" : "Password",
         "login_message" : "You don't have an account?", 
@@ -20,14 +20,16 @@ const resources = {
         "submit": "Submit",
         
         "lists_addButton":"Add new list" , 
-        "no_lists_message" : " There are no lists. Please add one!"
+        "no_lists_message" : " There are no lists. Please add one!",
+        "save" : "Save",
+        "placeholder_text": "Add your notes here."
 
       }
     }, 
 
   fr: {
     translation: {
-      "title" : "Liste de courses",
+      "title" : "Notes et listes",
       "login_name" : "Nom",
       "login_password" : "Mot de passe",
       "login_message" : "Vous n'avez pas de compte?", 
@@ -42,7 +44,9 @@ const resources = {
       "submit" : "Soumettre",
 
       "lists_addButton":"Ajouter une nouvelle liste",
-      "no_lists_message" : "Il n'y a pas de listes. Veuillez en ajouter un!"
+      "no_lists_message" : "Il n'y a pas de listes. Veuillez en ajouter un!",
+      "save" : "Enregistrer",
+      "placeholder_text": "Ajoutez vos notes ici."
 
     }
   }

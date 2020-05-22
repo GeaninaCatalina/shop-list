@@ -48,9 +48,9 @@ class Login extends Component {
       <div>
         <Grid centered columns={3}>
           <Grid.Row>
-            <Grid.Column width={3}></Grid.Column>
+            <Grid.Column width={5}></Grid.Column>
             <Grid.Column width={6} verticalAlign='middle'>
-              <Form>
+              <Form width='equal'>
                 <Form.Field>
                   <Input align='left' placeholder={t('login_name')} onChange={this.onSubmitUser} />
                 </Form.Field>
@@ -59,9 +59,15 @@ class Login extends Component {
                 </Form.Field>
                 <Button color='green' type='submit' onClick={() => this.onSubmitCredentials()}>{t('submit')}</Button>
               </Form>
+            </Grid.Column>
+            <Grid.Column width={5} ></Grid.Column>
+          </Grid.Row>
+          <Grid.Row>
+            <Grid.Column width={5}></Grid.Column>
+            <Grid.Column width={6} verticalAlign='middle'>
               <h2>{t('login_message')} <Link to='/signin'>{t('sign_in')}</Link></h2>
             </Grid.Column>
-            <Grid.Column width={3} ></Grid.Column>
+            <Grid.Column width={5} ></Grid.Column>
           </Grid.Row>
         </Grid>
       </div>

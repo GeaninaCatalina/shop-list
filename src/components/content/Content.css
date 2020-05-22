@@ -1,0 +1,26 @@
+.listTitle {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 10px;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 2em;
+    border-bottom: black;
+}
+.title {
+    border-bottom: black; 
+}
+.textArea-container {
+    padding:10px;
+}
+.textArea {
+    margin: 2px;
+    overflow: auto;
+    outline: none;
+    border-top-left-radius: 5px 5px;
+    border-top-right-radius: 5px 5px;
+    border-bottom-right-radius: 5px 5px;
+    border-bottom-left-radius: 5px 5px;
+    min-height: 250px;
+    width: 100%;
+    resize: none;
+}
