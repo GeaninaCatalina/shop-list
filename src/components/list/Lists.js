@@ -5,6 +5,7 @@ import { Button, Input, Form, Grid, Card } from 'semantic-ui-react';
 import axios from 'axios';
 import SideMenu from '../sideMenu/SideMenu.js';
 import Content from '../content/Content.js';
+import { v4 as uuid } from 'uuid';
 
 class Lists extends Component {
   constructor() {
@@ -40,7 +41,8 @@ class Lists extends Component {
   onAddNewList = () => {
     const { lists } = this.state;
     if (this.state.userInput !== '') {
-      const newList = { listName: this.state.userInput, content: '' };
+      const id = uuid();
+      const newList = {id, listName: this.state.userInput, content: '' };
       lists.push(newList);
       this.onSubmitNewList();
       this.setState({ lists, userInput: '', selectedItem: newList });

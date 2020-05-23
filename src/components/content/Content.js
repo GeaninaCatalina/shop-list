@@ -1,5 +1,5 @@
 import React from "react";
-import { TextArea, Button } from 'semantic-ui-react';
+import { TextArea, Button, Icon } from 'semantic-ui-react';
 import './Content.css';
 import { withNamespaces } from 'react-i18next';
 import i18n from '../../i18n';
@@ -16,7 +16,10 @@ class Content extends React.Component {
     return (
       <div>
         <div className='listTitle'>
-          <span className='title'>{selectedItem.listName}</span>
+          <span className='title'>
+            {selectedItem.listName}
+            <Icon className='editIcon' link size='small' name='pencil'></Icon>
+          </span>
         </div>
         <div className='textArea-container'>
           <TextArea className='textArea' placeholder={t('placeholder_text')} value={selectedItem.content} onChange={this.props.onContentChange} />

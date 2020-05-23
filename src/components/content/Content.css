@@ -24,3 +24,7 @@
     width: 100%;
     resize: none;
 }
+i.icon.pencil:before {
+    content: "\f303";
+    margin: 25px;
+}
