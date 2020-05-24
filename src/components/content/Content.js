@@ -18,7 +18,6 @@ class Content extends React.Component {
         <div className='listTitle'>
           <span className='title'>
             {selectedItem.listName}
-            <Icon className='editIcon' link size='small' name='pencil'></Icon>
           </span>
         </div>
         <div className='textArea-container'>

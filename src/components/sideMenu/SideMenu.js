@@ -1,5 +1,5 @@
 import React from "react";
-import { Menu } from 'semantic-ui-react'
+import { Menu, Icon } from 'semantic-ui-react'
 
 class SideMenu extends React.Component {
 
@@ -15,7 +15,11 @@ class SideMenu extends React.Component {
                 name={list.listName}
                 active={this.props.activeItem === list.listName}
                 onClick={this.handleItemClick}
-              />
+              >
+              <Icon className='editIcon'size='large' link name='delete'></Icon>
+              <Icon className='editIcon'size='large' link name='pencil'></Icon>
+              {list.listName}
+              </Menu.Item>
     });
   }
 

@@ -26,5 +26,9 @@
 }
 i.icon.pencil:before {
     content: "\f303";
-    margin: 25px;
+    margin: 10px;
+}
+i.icon.delete:before {
+    content: "\f00d";
+    margin: 10px;
 }
