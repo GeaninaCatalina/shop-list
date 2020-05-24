@@ -27,8 +27,8 @@ class Lists extends Component {
     this.setState({ lists: response.data, selectedItem: response.data[0] });
   }
 
-  onChangeSelectedItem = (newSelectedItem) => {
-    const selectedItem = this.state.lists.filter(item => item.listName === newSelectedItem)[0];
+  onChangeSelectedItem = (newSelectedId) => {
+    const selectedItem = this.state.lists.filter(item => item._id === newSelectedId)[0];
 
     this.setState({ selectedItem });
   }
@@ -48,6 +48,21 @@ class Lists extends Component {
       }
     };
   }
+
+  onCopyList = async (list) => {
+    const { lists } = this.state;
+    const newList = {listName:list.listName, content:list.content}; 
+    console.log(newList);
+    const response = await this.onSubmitNewList(newList);
+
+    if (response.status === 200) {
+      console.log(response.data)
+      lists.push(response.data);
+      this.setState({ lists, selectedItem: response.data });
+      console.log(this.state.selectedItem)
+    }
+  };
+
 
   async onSubmitNewList(newList) {
     return await axios.post('http://localhost:4100/savelist', newList);
@@ -75,12 +90,12 @@ class Lists extends Component {
 
     selectedItem.content = newContent;
     lists.forEach(list => {
-      if (list.listName === selectedItem.listName) {
+      if (list._id === selectedItem._id) {
         list.content = selectedItem.content;
       }
     })
     this.setState({ lists, selectedItem });
-  } 
+  }
 
   onChangeTitle = (event) => {
     const newListName = event.target.value;
@@ -97,58 +112,67 @@ class Lists extends Component {
 
   onDeleteList = async (list) => {
     const { lists } = this.state;
-    
+
     const response = await axios.delete('http://localhost:4100/deletelist/' + list._id);
     console.log(list);
     console.log(response);
     if (response.status === 200) {
       const index = lists.indexOf(list);
-      console.log('index');
-      console.log(index);
       if (index > -1) {
         lists.splice(index, 1);
-        this.setState({lists});
+        this.setState({ lists });
       }
     }
   }
 
-
-render() {
-  const { t } = this.props;
-  return (
-    <div>
+  render() {
+    const { t } = this.props;
+    return (
       <div>
-        <Form >
-          <Form.Group widths='equal'>
-            <Input placeholder={t('lists_addButton')}
-              onChange={this.onInputChange}
-              value={this.state.userInput}
-            />
-            <Button type='submit' icon='add' onClick={this.onAddNewList}></Button>
-          </Form.Group>
-        </Form>
-        <Card fluid>
-          <Grid columns={2} centered padded>
-            {this.state.selectedItem !== undefined ?
-              <Grid.Row>
-                <Grid.Column width={4}>
-                  <SideMenu onDeleteList={this.onDeleteList} activeItem={this.state.selectedItem.listName} lists={this.state.lists} onChangeSelectemItem={this.onChangeSelectedItem}>
-                  </SideMenu>
-                </Grid.Column>
-                <Grid.Column width={12}>
-                  <Content selectedItem={this.state.selectedItem} onChangeTitle={this.onChangeTitle} onContentChange={this.onChangeContent} onSaveButton={this.onUpdateContent}></Content>
-                </Grid.Column>
-              </Grid.Row> :
-              <Grid.Row columns={1}>
-                <Grid.Column>
-                  {t('no_lists_message')}
-                </Grid.Column>
-              </Grid.Row>}
-          </Grid>
-        </Card>
+        <div>
+          <Form >
+            <Form.Group widths='equal'>
+              <Input placeholder={t('lists_addButton')}
+                onChange={this.onInputChange}
+                value={this.state.userInput}
+              />
+              <Button type='submit' icon='add' onClick={this.onAddNewList}></Button>
+            </Form.Group>
+          </Form>
+          <Card fluid>
+            <Grid columns={2} centered padded>
+              {this.state.selectedItem !== undefined ?
+                <Grid.Row>
+                  <Grid.Column width={4}>
+                    <SideMenu
+                      onDeleteList={this.onDeleteList}
+                      activeItem={this.state.selectedItem._id}
+                      lists={this.state.lists}
+                      onChangeSelectemItem={this.onChangeSelectedItem}
+                      onCopyList={this.onCopyList}
+                    >
+                    </SideMenu>
+                  </Grid.Column>
+                  <Grid.Column width={12}>
+                    <Content
+                      selectedItem={this.state.selectedItem}
+                      onChangeTitle={this.onChangeTitle}
+                      onContentChange={this.onChangeContent}
+                      onSaveButton={this.onUpdateContent}
+                    >
+                    </Content>
+                  </Grid.Column>
+                </Grid.Row> :
+                <Grid.Row columns={1}>
+                  <Grid.Column>
+                    {t('no_lists_message')}
+                  </Grid.Column>
+                </Grid.Row>}
+            </Grid>
+          </Card>
+        </div>
       </div>
-    </div>
-  )
-}
+    )
+  }
 }
 export default withNamespaces()(Lists); 
