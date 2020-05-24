@@ -23,7 +23,7 @@ class Login extends Component {
       }) 
     console.log(res.data);
     if (res.data === true) {
-      this.props.history.push('/list-of-lists');
+      this.props.history.push('/list-of-lists/lists');
     } else {
       alert ('Wrong User name or password!')
     }
