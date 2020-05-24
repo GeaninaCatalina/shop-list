@@ -5,7 +5,6 @@ import { Button, Input, Form, Grid, Card } from 'semantic-ui-react';
 import axios from 'axios';
 import SideMenu from '../sideMenu/SideMenu.js';
 import Content from '../content/Content.js';
-import { v4 as uuid } from 'uuid';
 
 class Lists extends Component {
   constructor() {
@@ -38,15 +37,26 @@ class Lists extends Component {
     i18n.changeLanguage(lng);
   }
 
-  onAddNewList = () => {
+  onAddNewList = async () => {
     const { lists } = this.state;
     if (this.state.userInput !== '') {
-      const id = uuid();
-      const newList = {id, listName: this.state.userInput, content: '' };
-      lists.push(newList);
-      this.onSubmitNewList();
-      this.setState({ lists, userInput: '', selectedItem: newList });
+      const newList = {listName: this.state.userInput, content: '' };
+      const response = await this.onSubmitNewList(newList);
+      console.log('response data: ')
+      console.log(response.data);
+      if(response.status === 200) {
+        lists.push(response.data);
+        this.setState({ lists, userInput: '', selectedItem: response.data });
+        console.log('lists: ')
+        console.log(this.state.lists); 
+        console.log('selecteditem: ')
+        console.log(this.state.selectedItem);
+      }
     };
+  }
+
+  async onSubmitNewList(newList) {
+    return await axios.post('http://localhost:4100/savelist', newList);
   }
 
   onInputChange = (event) => {
@@ -55,19 +65,14 @@ class Lists extends Component {
     });
   }
 
-  async onSubmitNewList() {
-    await axios.post('http://localhost:4100/savelist',
-      {
-        listName: this.state.userInput,
-        content: this.state.userInput
-      });
-  }
-
   onUpdateContent = async () => {
-    const {listName, content} = this.state.selectedItem;
+    const {_id, listName, content} = this.state.selectedItem;
+    console.log(this.state.selectedItem)
+    console.log(this.state.lists)
 
     await axios.put('http://localhost:4100/updatelist',
     {
+      _id: _id,
       listName: listName,
       content: content
     });
