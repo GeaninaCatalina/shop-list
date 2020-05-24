@@ -16,7 +16,7 @@ class SideMenu extends React.Component {
                 active={this.props.activeItem === list.listName}
                 onClick={this.handleItemClick}
               >
-              <Icon className='editIcon'size='large' link name='delete'></Icon>
+              <Icon className='editIcon'size='large' link name='delete' onClick={() => this.props.onDeleteList(list)}></Icon>
               <Icon className='editIcon'size='large' link name='pencil'></Icon>
               {list.listName}
               </Menu.Item>

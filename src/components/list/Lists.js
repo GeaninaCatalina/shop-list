@@ -40,17 +40,11 @@ class Lists extends Component {
   onAddNewList = async () => {
     const { lists } = this.state;
     if (this.state.userInput !== '') {
-      const newList = {listName: this.state.userInput, content: '' };
+      const newList = { listName: this.state.userInput, content: '' };
       const response = await this.onSubmitNewList(newList);
-      console.log('response data: ')
-      console.log(response.data);
-      if(response.status === 200) {
+      if (response.status === 200) {
         lists.push(response.data);
         this.setState({ lists, userInput: '', selectedItem: response.data });
-        console.log('lists: ')
-        console.log(this.state.lists); 
-        console.log('selecteditem: ')
-        console.log(this.state.selectedItem);
       }
     };
   }
@@ -66,68 +60,82 @@ class Lists extends Component {
   }
 
   onUpdateContent = async () => {
-    const {_id, listName, content} = this.state.selectedItem;
-    console.log(this.state.selectedItem)
-    console.log(this.state.lists)
-
+    const { _id, listName, content } = this.state.selectedItem;
     await axios.put('http://localhost:4100/updatelist',
-    {
-      _id: _id,
-      listName: listName,
-      content: content
-    });
+      {
+        _id: _id,
+        listName: listName,
+        content: content
+      });
   }
 
   onChangeContent = (event) => {
     const newContent = event.target.value;
-    const {lists, selectedItem} = this.state;
+    const { lists, selectedItem } = this.state;
 
     selectedItem.content = newContent;
     lists.forEach(list => {
-      if(list.listName === selectedItem.listName) {
-       list.content = selectedItem.content;
+      if (list.listName === selectedItem.listName) {
+        list.content = selectedItem.content;
       }
     })
-    console.log(lists)
-    this.setState({lists, selectedItem});
+    this.setState({ lists, selectedItem });
   }
 
-  render() {
-    const { t } = this.props;
-    return (
-      <div>
-        <div>
-          <Form >
-            <Form.Group widths='equal'>
-              <Input placeholder={t('lists_addButton')}
-                onChange={this.onInputChange}
-                value={this.state.userInput}
-              />
-              <Button type='submit' icon='add' onClick={this.onAddNewList}></Button>
-            </Form.Group>
-          </Form>
-          <Card fluid>
-            <Grid columns={2} centered padded>
-              {this.state.selectedItem !== undefined ?
-                <Grid.Row>
-                  <Grid.Column width={4}>
-                    <SideMenu activeItem={this.state.selectedItem.listName} lists={this.state.lists} onChangeSelectemItem={this.onChangeSelectedItem}>
-                    </SideMenu>
-                  </Grid.Column>
-                  <Grid.Column width={12}>
-                    <Content selectedItem={this.state.selectedItem} onContentChange={this.onChangeContent} onSaveButton={this.onUpdateContent}></Content>
-                  </Grid.Column>
-                </Grid.Row> :
-                <Grid.Row columns={1}>
-                  <Grid.Column>
-                    {t('no_lists_message')}
-                  </Grid.Column>
-                </Grid.Row>}
-            </Grid>
-          </Card>
-        </div>
-      </div>
-    )
+  onDeleteList = async (list) => {
+    const { lists } = this.state;
+    
+    const response = await axios.delete('http://localhost:4100/deletelist/' + list._id);
+    console.log(list);
+    console.log(response);
+    if (response.status === 200) {
+      const index = lists.indexOf(list);
+      console.log('index');
+      console.log(index);
+      if (index > -1) {
+        lists.splice(index, 1);
+        this.setState({lists});
+      }
+    }
   }
+
+
+render() {
+  const { t } = this.props;
+  return (
+    <div>
+      <div>
+        <Form >
+          <Form.Group widths='equal'>
+            <Input placeholder={t('lists_addButton')}
+              onChange={this.onInputChange}
+              value={this.state.userInput}
+            />
+            <Button type='submit' icon='add' onClick={this.onAddNewList}></Button>
+          </Form.Group>
+        </Form>
+        <Card fluid>
+          <Grid columns={2} centered padded>
+            {this.state.selectedItem !== undefined ?
+              <Grid.Row>
+                <Grid.Column width={4}>
+                  <SideMenu onDeleteList={this.onDeleteList} activeItem={this.state.selectedItem.listName} lists={this.state.lists} onChangeSelectemItem={this.onChangeSelectedItem}>
+                  </SideMenu>
+                </Grid.Column>
+                <Grid.Column width={12}>
+                  <Content selectedItem={this.state.selectedItem} onContentChange={this.onChangeContent} onSaveButton={this.onUpdateContent}></Content>
+                </Grid.Column>
+              </Grid.Row> :
+              <Grid.Row columns={1}>
+                <Grid.Column>
+                  {t('no_lists_message')}
+                </Grid.Column>
+              </Grid.Row>}
+          </Grid>
+        </Card>
+      </div>
+    </div>
+  )
+}
 }
 export default withNamespaces()(Lists); 
