@@ -80,6 +80,19 @@ class Lists extends Component {
       }
     })
     this.setState({ lists, selectedItem });
+  } 
+
+  onChangeTitle = (event) => {
+    const newListName = event.target.value;
+    const { lists, selectedItem } = this.state;
+
+    selectedItem.listName = newListName;
+    lists.forEach(list => {
+      if (list._id === selectedItem._id) {
+        list.listName = selectedItem.listName;
+      }
+    })
+    this.setState({ lists, selectedItem });
   }
 
   onDeleteList = async (list) => {
@@ -123,7 +136,7 @@ render() {
                   </SideMenu>
                 </Grid.Column>
                 <Grid.Column width={12}>
-                  <Content selectedItem={this.state.selectedItem} onContentChange={this.onChangeContent} onSaveButton={this.onUpdateContent}></Content>
+                  <Content selectedItem={this.state.selectedItem} onChangeTitle={this.onChangeTitle} onContentChange={this.onChangeContent} onSaveButton={this.onUpdateContent}></Content>
                 </Grid.Column>
               </Grid.Row> :
               <Grid.Row columns={1}>
