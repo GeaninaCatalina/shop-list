@@ -23,8 +23,9 @@ class Lists extends Component {
   async getLists() {
     const response = await axios.get('http://localhost:4100/getlists', {
     });
-
-    this.setState({ lists: response.data, selectedItem: response.data[0] });
+    const lists = response.data;
+    lists.reverse(); 
+    this.setState({ lists, selectedItem: lists[0] });
   }
 
   onChangeSelectedItem = (newSelectedId) => {
@@ -52,14 +53,11 @@ class Lists extends Component {
   onCopyList = async (list) => {
     const { lists } = this.state;
     const newList = {listName:list.listName, content:list.content}; 
-    console.log(newList);
     const response = await this.onSubmitNewList(newList);
 
     if (response.status === 200) {
-      console.log(response.data)
       lists.push(response.data);
       this.setState({ lists, selectedItem: response.data });
-      console.log(this.state.selectedItem)
     }
   };
 
@@ -114,8 +112,6 @@ class Lists extends Component {
     const { lists } = this.state;
 
     const response = await axios.delete('http://localhost:4100/deletelist/' + list._id);
-    console.log(list);
-    console.log(response);
     if (response.status === 200) {
       const index = lists.indexOf(list);
       if (index > -1) {

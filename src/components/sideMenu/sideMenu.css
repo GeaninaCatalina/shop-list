@@ -1,0 +1,5 @@
+.scrollBar{
+    height:550px;
+    overflow:scroll;
+    overflow-x:hidden;
+}
