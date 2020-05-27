@@ -1,19 +1,17 @@
 import React, { Component } from 'react';
+import './Lists.css';
 import { withNamespaces } from 'react-i18next';
-import i18n from '../../../i18n.js';
+import i18n from '../../i18n.js';
 import { Button, Input, Form, Grid, Card } from 'semantic-ui-react';
-import axios from 'axios';
-import SideMenu from '../menu/sideMenu/SideMenu.js';
-import Content from '../menu/content/Content.js';
+import SideMenu from './sideMenu/SideMenu.js';
+import Content from './content/Content.js';
+import ListRestService from '../../service/ListRestService.js';
 
 class Lists extends Component {
-  constructor() {
-    super();
-    this.state = {
-      lists: [],
-      userInput: '',
-      selectedItem: undefined
-    }
+  state = {
+    lists: [],
+    userInput: '',
+    selectedItemId: undefined
   }
 
   componentWillMount() {
@@ -21,16 +19,13 @@ class Lists extends Component {
   }
 
   async getLists() {
-    const response = await axios.get('http://localhost:4100/getlists', {
-    });
+    const response = await ListRestService.getLists();
     const lists = response.data;
-    this.setState({ lists, selectedItem: lists[lists.length - 1] });
+    this.setState({ lists, selectedItemId: lists[lists.length - 1]._id });
   }
 
   onChangeSelectedItem = (newSelectedId) => {
-    const selectedItem = this.state.lists.filter(item => item._id === newSelectedId)[0];
-
-    this.setState({ selectedItem });
+    this.setState({ selectedItemId: newSelectedId });
   }
 
   changeLanguage = (lng) => {
@@ -41,10 +36,11 @@ class Lists extends Component {
     const { lists } = this.state;
     if (this.state.userInput !== '') {
       const newList = { listName: this.state.userInput, content: '' };
-      const response = await this.onSubmitNewList(newList);
+      const response = await ListRestService.saveList(newList);
+
       if (response.status === 200) {
         lists.push(response.data);
-        this.setState({ lists, userInput: '', selectedItem: lists[lists.length - 1] });
+        this.setState({ lists, userInput: '', selectedItemId: lists[lists.length - 1]._id });
       }
     };
   }
@@ -52,17 +48,54 @@ class Lists extends Component {
   onCopyList = async (list) => {
     const { lists } = this.state;
     const newList = {listName:list.listName, content:list.content}; 
-    const response = await this.onSubmitNewList(newList);
+    const response = await ListRestService.saveList(newList);
 
     if (response.status === 200) {
       lists.push(response.data);
-      this.setState({ lists, selectedItem: response.data });
+      this.setState({ lists, selectedItemId: response.data._id });
     }
   };
 
+  onUpdateContent = async () => {
+    const selectedItem = this.state.lists.filter(item => item._id === this.state.selectedItemId)[0];
+    ListRestService.updateList(selectedItem);
+  }
 
-  async onSubmitNewList(newList) {
-    return await axios.post('http://localhost:4100/savelist', newList);
+  onChangeContent = (event) => {
+    const newContent = event.target.value;
+    const { lists, selectedItemId } = this.state;
+
+    lists.forEach(list => {
+      if (list._id === selectedItemId) {
+        list.content = newContent;
+      }
+    });
+
+    this.setState({ lists });
+  }
+
+  onChangeTitle = (event) => {
+    const { lists, selectedItemId } = this.state;
+
+    lists.forEach(list => {
+      if (list._id === selectedItemId) {
+        list.listName = event.target.value;
+      }
+    })
+    this.setState({ lists });
+  }
+
+  onDeleteList = async (list) => {
+    const response = await ListRestService.deleteList(list._id);
+
+    if (response.status === 200) {
+      const { lists } = this.state;
+      const index = lists.indexOf(list);
+      if (index > -1) {
+        lists.splice(index, 1);
+        this.setState({ lists, selectedItemId: lists[lists.length - 1]._id });
+      }
+    }
   }
 
   onInputChange = (event) => {
@@ -71,60 +104,12 @@ class Lists extends Component {
     });
   }
 
-  onUpdateContent = async () => {
-    const { _id, listName, content } = this.state.selectedItem;
-    await axios.put('http://localhost:4100/updatelist',
-      {
-        _id: _id,
-        listName: listName,
-        content: content
-      });
-  }
-
-  onChangeContent = (event) => {
-    const newContent = event.target.value;
-    const { lists, selectedItem } = this.state;
-
-    selectedItem.content = newContent;
-    lists.forEach(list => {
-      if (list._id === selectedItem._id) {
-        list.content = selectedItem.content;
-      }
-    })
-    this.setState({ lists, selectedItem });
-  }
-
-  onChangeTitle = (event) => {
-    const newListName = event.target.value;
-    const { lists, selectedItem } = this.state;
-
-    selectedItem.listName = newListName;
-    lists.forEach(list => {
-      if (list._id === selectedItem._id) {
-        list.listName = selectedItem.listName;
-      }
-    })
-    this.setState({ lists, selectedItem });
-  }
-
-  onDeleteList = async (list) => {
-    const { lists } = this.state;
-
-    const response = await axios.delete('http://localhost:4100/deletelist/' + list._id);
-    if (response.status === 200) {
-      const index = lists.indexOf(list);
-      if (index > -1) {
-        lists.splice(index, 1);
-        this.setState({ lists });
-      }
-    }
-  }
-
   render() {
     const { t } = this.props;
+    const selectedItem = this.state.lists.filter(item => item._id === this.state.selectedItemId)[0];
+
     return (
-      <div>
-        <div>
+        <div className='listContainer'>
           <Form >
             <Form.Group widths='equal'>
               <Input placeholder={t('lists_addButton')}
@@ -136,12 +121,12 @@ class Lists extends Component {
           </Form>
           <Card fluid>
             <Grid columns={2} centered padded>
-              {this.state.selectedItem !== undefined ?
+              {selectedItem !== undefined ?
                 <Grid.Row>
                   <Grid.Column width={4}>
                     <SideMenu
                       onDeleteList={this.onDeleteList}
-                      activeItem={this.state.selectedItem._id}
+                      activeItem={this.state.selectedItemId}
                       lists={this.state.lists}
                       onChangeSelectemItem={this.onChangeSelectedItem}
                       onCopyList={this.onCopyList}
@@ -150,7 +135,7 @@ class Lists extends Component {
                   </Grid.Column>
                   <Grid.Column width={12}>
                     <Content
-                      selectedItem={this.state.selectedItem}
+                      selectedItem={selectedItem}
                       onChangeTitle={this.onChangeTitle}
                       onContentChange={this.onChangeContent}
                       onSaveButton={this.onUpdateContent}
@@ -166,7 +151,6 @@ class Lists extends Component {
             </Grid>
           </Card>
         </div>
-      </div>
     )
   }
 }

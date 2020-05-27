@@ -5,7 +5,6 @@ import i18n from '../../i18n';
 import { Link } from 'react-router-dom'; 
 import axios from 'axios';
 
-
 class Signin extends Component {
   constructor(props) {
     super(props);

@@ -7,25 +7,19 @@ import axios from 'axios';
 
 
 class Login extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      userName: '',
-      password: ''
-    };
+  state = {
+    userName: '',
+    password: ''
   }
 
   async onSubmitCredentials(){
-    const res = await axios.post('http://localhost:4100/login', 
-      {
-        userName: this.state.userName,
-        password: this.state.password
-      }) 
-    console.log(res.data);
+    const {userName, password} = this.state;
+    const res = await axios.post('http://localhost:4100/login', { userName, password });
+    
     if (res.data === true) {
-      this.props.history.push('/list-of-lists/lists');
+      this.props.history.push('/lists');
     } else {
-      alert ('Wrong User name or password!')
+      alert ('Wrong User name or password!');
     }
   }
 
@@ -41,9 +35,9 @@ class Login extends Component {
     i18n.changeLanguage(lng);
   }
 
-
   render() {
     const { t } = this.props;
+
     return (
       <div>
         <Grid centered columns={3}>
@@ -67,7 +61,7 @@ class Login extends Component {
             <Grid.Column width={6} verticalAlign='middle'>
               <h2>{t('login_message')} <Link to='/signin'>{t('sign_in')}</Link></h2>
             </Grid.Column>
-            <Grid.Column width={5} ></Grid.Column>
+            <Grid.Column width={5}></Grid.Column>
           </Grid.Row>
         </Grid>
       </div>

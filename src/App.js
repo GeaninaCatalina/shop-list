@@ -6,7 +6,7 @@ import { withNamespaces } from 'react-i18next';
 import i18n from './i18n';
 import Login from './components/login/Login';
 import Signin from './components/signin/Signin';
-import ListsRouter from './components/nestedLists/listsRouter/ListsRouter'; 
+import Lists from './components/lists/Lists';
 
 class App extends Component {
 
@@ -15,7 +15,7 @@ class App extends Component {
   }
 
   noMatchPage = () => {
-    return(
+    return (
       <h3>404 - Not found</h3>
     )
   }
@@ -34,10 +34,12 @@ class App extends Component {
         <div>
           <Router>
             <Switch>
+              <Route exact path="/lists" component={Lists} />
               <Route exact path="/login" component={Login} />
-              <Route exact path="/list-of-lists/lists" component={ListsRouter} />
               <Route exact path="/signin" component={Signin} />
-              <Redirect from exact path='/' to='/list-of-lists/lists'/>
+              <Route exact path='/'>
+                <Redirect to='/lists'></Redirect>
+              </Route>
               <Route component={this.noMatchPage} />
             </Switch>
           </Router>

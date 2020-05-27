@@ -16,8 +16,8 @@ class SideMenu extends React.Component {
         active={this.props.activeItem === list._id}
         onClick={() => this.handleItemClick(list._id)}
       >
-        <Icon className='editIcon' size='smal' link name='delete' color='red' onClick={() => this.props.onDeleteList(list)}></Icon>
-        <Icon className='editIcon' size='smal' link name='copy' color='green' onClick={() => this.props.onCopyList(list)} ></Icon>
+        <Icon className='editIcon' size='small' link name='delete' color='red' onClick={() => this.props.onDeleteList(list)}></Icon>
+        <Icon className='editIcon' size='small' link name='copy' color='green' onClick={() => this.props.onCopyList(list)} ></Icon>
         {list.listName}
       </Menu.Item>
     });
@@ -26,6 +26,7 @@ class SideMenu extends React.Component {
   render() {
     const { lists } = this.props;
     const displayList = [...lists];
+    
     return ( 
       <div className='scrollBar'>
         <Menu fluid vertical tabular>
