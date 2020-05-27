@@ -4,7 +4,6 @@ import './sideMenu.css';
 
 class SideMenu extends React.Component {
 
-
   handleItemClick = (id) => {
     this.props.onChangeSelectemItem(id);
   }
@@ -26,10 +25,11 @@ class SideMenu extends React.Component {
 
   render() {
     const { lists } = this.props;
+    const displayList = [...lists];
     return (
       <div className='scrollBar'>
         <Menu fluid vertical tabular>
-          {this.generateMenuItems(lists)}
+          {this.generateMenuItems(lists.reverse())}
         </Menu>
       </div>
     )

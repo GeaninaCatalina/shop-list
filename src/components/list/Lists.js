@@ -24,8 +24,7 @@ class Lists extends Component {
     const response = await axios.get('http://localhost:4100/getlists', {
     });
     const lists = response.data;
-    lists.reverse(); 
-    this.setState({ lists, selectedItem: lists[0] });
+    this.setState({ lists, selectedItem: lists[lists.length - 1] });
   }
 
   onChangeSelectedItem = (newSelectedId) => {
@@ -45,7 +44,7 @@ class Lists extends Component {
       const response = await this.onSubmitNewList(newList);
       if (response.status === 200) {
         lists.push(response.data);
-        this.setState({ lists, userInput: '', selectedItem: response.data });
+        this.setState({ lists, userInput: '', selectedItem: lists[lists.length - 1] });
       }
     };
   }
