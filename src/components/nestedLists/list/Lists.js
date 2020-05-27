@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { withNamespaces } from 'react-i18next';
-import i18n from '../../i18n';
+import i18n from '../../../i18n.js';
 import { Button, Input, Form, Grid, Card } from 'semantic-ui-react';
 import axios from 'axios';
-import SideMenu from '../sideMenu/SideMenu.js';
-import Content from '../content/Content.js';
+import SideMenu from '../menu/sideMenu/SideMenu.js';
+import Content from '../menu/content/Content.js';
 
 class Lists extends Component {
   constructor() {

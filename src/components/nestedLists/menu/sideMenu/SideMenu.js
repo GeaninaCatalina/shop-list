@@ -22,14 +22,14 @@ class SideMenu extends React.Component {
       </Menu.Item>
     });
   }
-
+  
   render() {
     const { lists } = this.props;
     const displayList = [...lists];
-    return (
+    return ( 
       <div className='scrollBar'>
         <Menu fluid vertical tabular>
-          {this.generateMenuItems(lists.reverse())}
+          {this.generateMenuItems(displayList.reverse())}
         </Menu>
       </div>
     )

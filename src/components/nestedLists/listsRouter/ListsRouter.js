@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import './NestedList.css';
+import './ListsRouter.css';
 import { Switch, Route } from 'react-router-dom';
 import { Grid } from 'semantic-ui-react';
 import { withNamespaces } from 'react-i18next';
-import i18n from '../../i18n';
-import Lists from './../list/Lists';
+import i18n from '../../../i18n';
+import Lists from '../list/Lists';
 
-class NestedList extends Component {
+class  ListsRouter extends Component {
 
   changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
@@ -35,4 +35,4 @@ class NestedList extends Component {
   }
 }
 
-export default withNamespaces()(NestedList);
+export default withNamespaces()(ListsRouter);
