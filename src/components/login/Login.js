@@ -3,7 +3,7 @@ import { Button, Grid, Form, Input } from 'semantic-ui-react';
 import { withNamespaces } from 'react-i18next';
 import i18n from '../../i18n';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import UserRestService from '../../service/UserRestService';
 
 
 class Login extends Component {
@@ -14,7 +14,7 @@ class Login extends Component {
 
   async onSubmitCredentials(){
     const {userName, password} = this.state;
-    const res = await axios.post('http://localhost:4100/login', { userName, password });
+    const res = await UserRestService.userLogin({userName, password});
     
     if (res.data === true) {
       this.props.history.push('/lists');

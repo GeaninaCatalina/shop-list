@@ -3,7 +3,7 @@ import { Button, Grid, Form, Input } from 'semantic-ui-react';
 import { withNamespaces } from 'react-i18next';
 import i18n from '../../i18n';
 import { Link } from 'react-router-dom'; 
-import axios from 'axios';
+import UserRestService from '../../service/UserRestService';
 
 class Signin extends Component {
   constructor(props) {
@@ -33,11 +33,9 @@ class Signin extends Component {
   }
 
    async onSubmitCredentials(){
-      const res = await axios.post('http://localhost:4100/signin', 
-      {
-        userName: this.state.userName,
-        password: this.state.password
-      });
+     const {userName, password} = this.state; 
+      const res = await UserRestService.userSignin({userName, password});
+
       if (res.data === true) {
         this.props.history.push('/login');
       } else {
@@ -46,9 +44,8 @@ class Signin extends Component {
   }
 
   isPasswordIsValid= () => {
-    return this.state.password !== '' && 
-    this.state.password === this.state.confirmed && 
-    this.state.userName !== '';
+    const {password, confirmed, userName} = this.state; 
+    return password !== '' && password === confirmed && userName !== '';
   }
 
   render() {
