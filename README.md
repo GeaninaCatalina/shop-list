@@ -1,13 +1,32 @@
-This project was was createad with [Create React App](https://github.com/facebook/create-react-app).
+**Notes and lists** is a web application that allows to create and manage lists.
 
-## Available Scripts
+The purpose of this app is to learn web development technologies.  
 
-In the project directory, you can run:
+# Getting Started 
+s
+To install the app, run in your terminal:  
 
-### `npm start`
+```
+git clone
+```
+ 
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+You need to have npm package installed to run the app. If you don’t have it, run in your terminal:  
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+ 
+```
+npx install
+```
+ 
+
+To start the app you will need to run:   
+
+ 
+```
+npm strat  
+```
+ 
+
+The application starts at local host:3000    
+
+The backend used for this project, can be found at [https://github.com/GeaninaCatalina/shop-list-server](https://github.com/GeaninaCatalina/shop-list-server)
