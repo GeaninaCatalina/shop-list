@@ -34,9 +34,9 @@ class App extends Component {
         <div>
           <Router>
             <Switch>
-              <Route exact path="/lists" component={Lists} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/signin" component={Signin} />
+              <Route exact path="/lists" component={Lists} />
               <Route exact path='/'>
                 <Redirect to='/lists'></Redirect>
               </Route>
